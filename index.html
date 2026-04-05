@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Tema GTA 6</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      /* background: url('gta6-bg.png') no-repeat center center fixed; */
+      background-size: cover;
+    }
+    .login-container {
+      width: 350px;
+      margin: 100px auto;
+      z-index: 9999;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      color: #fff;
+      text-align: center;
+    }
+    .login-container img {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+    .login-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #ff00cc;
+      text-shadow: 2px 2px #000;
+    }
+    .login-container input {
+      width: 94%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background: #ff00cc;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .login-container button:hover {
+      background: #ff3399;
+    }
+    .footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .slider {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* atrás do conteúdo */
+      overflow: hidden;
+    }
+.slide-wrapper {
+  display: flex;
+  width: 300%; /* 3 imagens lado a lado */
+  height: 100%;
+  transition: transform 1s ease-in-out; /* animação suave */
+}
+    .slide {
+      width: 50%;
+      height: 100%;
+      flex-shrink: 0;
+      background-size: fit;
+      background-position: center;
+    }
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1s ease-in-out;
+  z-index: -1;
+}
+#bg1 { opacity: 1; }
+#bg2 { opacity: 0; }
+
+
+  </style>
+</head>
+<body>
+<div id="bg1" class="background"></div>
+<div id="bg2" class="background"></div>
+
+  <div class="top-bar">
+        Acesso para Testers E Desenvolvedores - Não Compartilhe Com Ninguém!
+  </div>
+  <div class="login-container">
+    <!-- Substitua por uma imagem estilizada própria, não oficial -->
+    <img src="gta6-logo.png" alt="Logo GTA 6 Custom">
+    <h2>Beta Testing Login</h2>
+    <form>
+      <input type="text" placeholder="Token de Acesso" required>
+      <button type="button" onclick="verificarSeVazio()">Entrar</button>
+    </form>
+  </div>
+   <div class="footer-bar">
+    Rockstar Games© 2026 - Todos os direitos reservados
+  </div>
+</body>
+<script>
+   const images = ["gta6-bg.png", "gta6-bg2.png", "gta6-bg3.png"];
+let current = 0;
+let showingFirst = true;
+
+const bg1 = document.getElementById("bg1");
+const bg2 = document.getElementById("bg2");
+
+// inicializa
+bg1.style.backgroundImage = `url('${images[current]}')`;
+
+function changeBackground() {
+  const next = (current + 1) % images.length;
+
+  if (showingFirst) {
+    // prepara bg2 com a próxima imagem
+    bg2.style.backgroundImage = `url('${images[next]}')`;
+    bg2.style.opacity = 1;
+    bg1.style.opacity = 0;
+  } else {
+    // prepara bg1 com a próxima imagem
+    bg1.style.backgroundImage = `url('${images[next]}')`;
+    bg1.style.opacity = 1;
+    bg2.style.opacity = 0;
+  }
+
+  current = next;
+  showingFirst = !showingFirst;
+}
+
+setInterval(changeBackground, 4000); // troca a cada 5s
+
+    function verificarSeVazio() {
+      var tokenInput = document.querySelector('input[type="text"]');
+      if (tokenInput.value.trim() === "") {
+        customAlert("Por favor, insira um token de acesso.");
+      } else {
+       incorrectLogin();
+      }
+    }
+    function incorrectLogin() {
+      customAlert("Token de acesso incorreto. Tente novamente.");
+    }
+    function customAlert(message) {
+        var alertBox = document.createElement("div");
+        alertBox.className = "custom-alert";
+        // Se estiver outra alerta, muda o texto e reseta o timer
+        var existingAlert = document.querySelector(".custom-alert");
+        if (existingAlert) {
+            existingAlert.innerText = message;
+            clearTimeout(existingAlert.timeoutId);
+            existingAlert.timeoutId = setTimeout(function() {
+                document.body.removeChild(existingAlert);
+            }, 3000);
+            return;
+        }
+        alertBox.style.position = "fixed";
+        alertBox.zIndex = "1000";
+        alertBox.style.top = "80%";
+        alertBox.style.left = "50%";
+        alertBox.style.transform = "translate(-50%, -50%)";
+        alertBox.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        alertBox.style.color = "#fff";
+        alertBox.style.padding = "20px";
+        alertBox.style.borderRadius = "10px";
+        alertBox.style.textAlign = "center";
+        alertBox.style.zIndex = "1000";
+        alertBox.innerText = message;
+        
+        document.body.appendChild(alertBox);
+        
+        setTimeout(function() {
+            document.body.removeChild(alertBox);
+        }, 3000);
+    }
+</script>
+</html>
